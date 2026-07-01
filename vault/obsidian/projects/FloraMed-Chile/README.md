@@ -18,7 +18,7 @@
 - [[projects/FloraMed-Chile/decisions/cef2117a|Filters & Search implemented for catalog view]] — `proposed`
 
 ## 🔄 Flow Steps
-- completed: 2
+- completed: 9
 
 ## 💬 Conversaciones
 - [[projects/FloraMed-Chile/conversations/18c22395|Feature: Implementación completa FloraMed Web App]]

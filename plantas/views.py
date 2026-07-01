@@ -23,9 +23,11 @@ def index(request):
     Landing page view for FloraMed Chile.
 
     Renders the home page with hero section, project description,
-    and call-to-action button linking to the catalog.
+    and a preview of the plant catalog. Shows all plants in a
+    compact 3-column grid below the info cards.
     """
-    return render(request, "index.html")
+    plantas = Planta.objects.all().order_by("nombre_comun")
+    return render(request, "index.html", {"plantas": plantas})
 
 
 def register(request):

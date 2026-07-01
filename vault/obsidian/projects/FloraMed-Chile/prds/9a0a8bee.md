@@ -6,21 +6,28 @@
 Aplicación web Django para catalogación, visualización y filtrado de plantas medicinales nativas chilenas con geolocalización, fichas técnicas, y autenticación de usuarios. Basado en PRD_FloraMed_Chile.md
 
 ### Tareas relacionadas
-- **Project Scaffolding & Django Configuration** [pending]
-- **Planta Model Implementation** [pending]
-- **Seed Data for 85 Species** [pending]
-- **Authentication System** [pending]
-- **Catalog Gallery View (Listado)** [pending]
-- **Filters & Search** [pending]
-- **Plant Detail View (Ficha Técnica)** [pending]
-- **Pl@ntNet API Integration** [pending]
-- **Documentation** [pending]
-- **Testing** [pending]
-- **Git Commit & Push** [pending]
+- **Project Scaffolding & Django Configuration** [completed]
+- **Planta Model Implementation** [completed]
+- **Seed Data for 85 Species** [completed]
+- **Authentication System** [completed]
+- **Catalog Gallery View (Listado)** [completed]
+- **Filters & Search** [completed]
+- **Plant Detail View (Ficha Técnica)** [completed]
+- **Pl@ntNet API Integration** [completed]
+- **Documentation** [completed]
+- **Testing** [completed]
+- **Git Commit & Push** [completed]
 
 ### Flow steps
 - `prd` → completed
 - `tasks` → completed
+- `implement` → completed
+- `test` → completed
+- `review` → completed
+- `commit` → completed
+- `document` → completed
+- `vault_sync` → completed
+- `consolidate` → completed
 
 ---
 Volver a [[projects/FloraMed-Chile/README|FloraMed-Chile]] · [[projects/FloraMed-Chile/tasks|Tasks]]

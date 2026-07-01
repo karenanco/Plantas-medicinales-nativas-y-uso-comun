@@ -85,6 +85,92 @@
     </div>
 </section>
 
+<!-- Plant Gallery Section -->
+<section class="bg-stone-50 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl md:text-4xl font-bold font-serif-science text-emerald-800 mb-3">
+                Catálogo de Plantas
+            </h2>
+            <p class="text-stone-600 text-lg max-w-2xl mx-auto">
+                Explora las {{ plantas|length }} especies registradas en nuestra herbolaria chilena.
+            </p>
+            <div class="w-16 h-0.5 bg-amber-500 mx-auto mt-4"></div>
+        </div>
+
+        {% if plantas %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% for planta in plantas %}
+            <a href="{% url 'detalle_planta' planta.id %}" class="group block focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg">
+                <div class="bg-white rounded-lg shadow overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 h-full flex flex-col">
+                    <!-- Image -->
+                    <div class="h-28 bg-stone-200 overflow-hidden relative">
+                        {% if planta.foto_real %}
+                        <img src="{{ planta.foto_real }}"
+                             alt="{{ planta.nombre_comun }}"
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                             loading="lazy"
+                             onerror="this.parentElement.innerHTML = fallbackSvg()">
+                        {% else %}
+                        <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-100 to-emerald-200">
+                            <svg class="w-10 h-10 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                                </path>
+                            </svg>
+                        </div>
+                        {% endif %}
+                        <span class="absolute top-2 right-2 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/90 text-emerald-800 shadow-sm backdrop-blur-sm font-mono-tech">
+                            {{ planta.uso_principal }}
+                        </span>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="p-3 flex flex-col flex-1">
+                        <h3 class="text-sm font-bold text-emerald-800 mb-0.5 group-hover:text-emerald-600 transition-colors leading-tight">
+                            {{ planta.nombre_comun }}
+                        </h3>
+                        <p class="font-serif-science italic text-stone-500 text-[11px] mb-1.5 border-l border-amber-500/50 pl-2">
+                            {{ planta.nombre_cientifico }}
+                        </p>
+                        <p class="text-[10px] text-stone-400 font-mono-tech mb-1.5">
+                            {{ planta.familia_botanica }}
+                        </p>
+                        <div class="flex-1"></div>
+                        <div class="flex flex-wrap gap-1 mt-auto">
+                            {% if planta.origen == "NATIVA" %}
+                            <span class="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200">Nativa</span>
+                            {% else %}
+                            <span class="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700 border border-amber-200">Asilvestrada</span>
+                            {% endif %}
+                            {% with zona=planta.zona_macro %}
+                            {% if zona == "NORTE" %}
+                            <span class="text-[10px] font-mono-tech font-medium px-1.5 py-0.5 rounded-full bg-orange-100 text-orange-700 border border-orange-200">{{ planta.get_zona_macro_display }}</span>
+                            {% elif zona == "CENTRO" %}
+                            <span class="text-[10px] font-mono-tech font-medium px-1.5 py-0.5 rounded-full bg-sky-100 text-sky-700 border border-sky-200">{{ planta.get_zona_macro_display }}</span>
+                            {% elif zona == "SUR" %}
+                            <span class="text-[10px] font-mono-tech font-medium px-1.5 py-0.5 rounded-full bg-teal-100 text-teal-700 border border-teal-200">{{ planta.get_zona_macro_display }}</span>
+                            {% elif zona == "PATAGONIA" %}
+                            <span class="text-[10px] font-mono-tech font-medium px-1.5 py-0.5 rounded-full bg-indigo-100 text-indigo-700 border border-indigo-200">{{ planta.get_zona_macro_display }}</span>
+                            {% endif %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-10">
+            <a href="{% url 'catalogo' %}"
+               class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-lg transition-all shadow hover:shadow-lg">
+                Ver catálogo completo →
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
 <!-- CTA Section -->
 <section class="bg-emerald-800 py-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
