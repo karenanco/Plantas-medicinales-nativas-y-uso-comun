@@ -29,7 +29,12 @@ class Planta(models.Model):
     descripcion_hoja = models.TextField()
     descripcion_tallo = models.TextField()
     descripcion_flor = models.TextField()
-    foto_real = models.URLField(help_text="URL de imagen real referencial o Pl@ntNet")
+    foto_real = models.ImageField(
+        upload_to="plantas/", 
+        null=True, 
+        blank=True, 
+        help_text="Sube una imagen real referencial de la planta"
+)
 
     # Clasificación de Usos e Interfaz Terapéutica
     uso_principal = models.CharField(

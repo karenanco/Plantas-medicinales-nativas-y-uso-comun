@@ -18,7 +18,7 @@
     <!-- Header Image -->
     {% if planta.foto_real %}
     <div class="mb-8 rounded-xl overflow-hidden shadow-lg">
-        <img src="{{ planta.foto_real }}"
+        <img src="{{ planta.foto_real.url }}"
              alt="{{ planta.nombre_comun }}"
              class="w-full max-h-96 object-cover">
     </div>
