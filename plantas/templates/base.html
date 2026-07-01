@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}FloraMed Chile{% endblock title %}</title>
+
+    <!-- Google Fonts: Playfair Display (serif) + JetBrains Mono (monospace) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    {% block extra_head %}{% endblock extra_head %}
+
+    <style>
+        /* Sage & Clay color palette custom utilities */
+        .font-serif-science {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+        .font-mono-tech {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+        }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800 flex flex-col min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="bg-emerald-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <a href="{% url 'index' %}" class="flex items-center space-x-2 text-white hover:text-emerald-200 transition-colors">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                        </path>
+                    </svg>
+                    <span class="font-bold text-xl font-serif-science">FloraMed Chile</span>
+                </a>
+
+                <!-- Nav Links -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="{% url 'index' %}"
+                        class="text-stone-100 hover:text-amber-200 transition-colors font-medium">
+                        Inicio
+                    </a>
+                    <a href="{% url 'catalogo' %}"
+                        class="text-stone-100 hover:text-amber-200 transition-colors font-medium">
+                        Catálogo
+                    </a>
+                    <a href="{% url 'identificar' %}"
+                        class="text-stone-100 hover:text-amber-200 transition-colors font-medium">
+                        Identificar
+                    </a>
+
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}"
+                        class="text-stone-100 hover:text-amber-200 transition-colors font-medium">
+                        Perfil
+                    </a>
+                    <form method="post" action="{% url 'logout' %}" class="inline">
+                        {% csrf_token %}
+                        <button type="submit"
+                            class="bg-amber-700 hover:bg-amber-800 text-white px-4 py-2 rounded-lg transition-colors font-medium">
+                            Cerrar Sesión
+                        </button>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'login' %}"
+                        class="text-stone-100 hover:text-amber-200 transition-colors font-medium">
+                        Iniciar Sesión
+                    </a>
+                    <a href="{% url 'register' %}"
+                        class="bg-amber-700 hover:bg-amber-800 text-white px-4 py-2 rounded-lg transition-colors font-medium">
+                        Registrarse
+                    </a>
+                    {% endif %}
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white hover:text-amber-200 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu (hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-emerald-900 pb-4">
+            <div class="px-4 space-y-3">
+                <a href="{% url 'index' %}"
+                    class="block text-stone-100 hover:text-amber-200 transition-colors font-medium py-1">
+                    Inicio
+                </a>
+                <a href="{% url 'catalogo' %}"
+                    class="block text-stone-100 hover:text-amber-200 transition-colors font-medium py-1">
+                    Catálogo
+                </a>
+                <a href="{% url 'identificar' %}"
+                    class="block text-stone-100 hover:text-amber-200 transition-colors font-medium py-1">
+                    Identificar
+                </a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}"
+                    class="block text-stone-100 hover:text-amber-200 transition-colors font-medium py-1">
+                    Perfil
+                </a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit"
+                        class="w-full bg-amber-700 hover:bg-amber-800 text-white px-4 py-2 rounded-lg transition-colors font-medium">
+                        Cerrar Sesión
+                    </button>
+                </form>
+                {% else %}
+                <a href="{% url 'login' %}"
+                    class="block text-stone-100 hover:text-amber-200 transition-colors font-medium py-1">
+                    Iniciar Sesión
+                </a>
+                <a href="{% url 'register' %}"
+                    class="block bg-amber-700 hover:bg-amber-800 text-white px-4 py-2 rounded-lg transition-colors font-medium text-center">
+                    Registrarse
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+        {% block content %}{% endblock content %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-emerald-900 text-stone-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Brand -->
+                <div>
+                    <h3 class="text-white font-bold text-lg font-serif-science mb-2">FloraMed Chile</h3>
+                    <p class="text-stone-400 text-sm">
+                        Catálogo de Plantas Medicinales Nativas y de Uso Común en Chile.
+                    </p>
+                </div>
+                <!-- Links -->
+                <div>
+                    <h4 class="text-white font-semibold mb-2">Enlaces</h4>
+                    <ul class="space-y-1 text-sm">
+                        <li><a href="{% url 'index' %}" class="hover:text-amber-300 transition-colors">Inicio</a></li>
+                        <li><a href="{% url 'catalogo' %}" class="hover:text-amber-300 transition-colors">Catálogo</a></li>
+                        <li><a href="{% url 'identificar' %}" class="hover:text-amber-300 transition-colors">Identificar</a></li>
+                    </ul>
+                </div>
+                <!-- Tech -->
+                <div>
+                    <h4 class="text-white font-semibold mb-2">Tecnología</h4>
+                    <p class="text-sm text-stone-400">
+                        Django 6.0 · SQLite · Tailwind CSS · Pl@ntNet API
+                    </p>
+                    <p class="text-xs text-stone-500 mt-2 font-mono-tech">
+                        v1.0.0
+                    </p>
+                </div>
+            </div>
+            <div class="border-t border-emerald-700 mt-6 pt-4 text-center text-sm text-stone-500">
+                &copy; {% now "Y" %} FloraMed Chile. Proyecto de divulgación etnobotánica.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile menu toggle script -->
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', function () {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    </script>
+
+    {% block extra_scripts %}{% endblock extra_scripts %}
+</body>
+</html>

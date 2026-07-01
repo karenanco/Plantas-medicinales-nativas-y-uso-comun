@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}FloraMed Chile — Catálogo de Plantas Medicinales{% endblock title %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-gradient-to-br from-emerald-800 via-emerald-700 to-emerald-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-6xl font-bold font-serif-science mb-6 leading-tight">
+                FloraMed Chile
+            </h1>
+            <p class="text-xl md:text-2xl text-emerald-100 mb-4 font-medium">
+                Catálogo de Plantas Medicinales Nativas y de Uso Común en Chile
+            </p>
+            <div class="w-24 h-1 bg-amber-500 mx-auto mb-8"></div>
+            <p class="text-lg md:text-xl text-stone-200 max-w-3xl mx-auto mb-10 leading-relaxed">
+                Explora la riqueza de la flora herbolaria chilena. Descubre sus propiedades,
+                usos tradicionales, hábitat y preparaciones terapéuticas en un solo lugar.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{% url 'catalogo' %}"
+                    class="inline-block bg-amber-600 hover:bg-amber-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                    Explorar Catálogo
+                </a>
+                <a href="#about"
+                    class="inline-block bg-white/10 hover:bg-white/20 text-white font-semibold py-4 px-8 rounded-lg text-lg transition-all backdrop-blur-sm border border-white/20">
+                    Conocer más
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Info Section -->
+<section id="about" class="py-16 bg-stone-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Card 1 -->
+            <div class="bg-white rounded-xl shadow-md p-8 hover:shadow-lg transition-shadow">
+                <div class="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mb-4">
+                    <svg class="w-7 h-7 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-emerald-800 mb-2 font-serif-science">Identificación Científica</h3>
+                <p class="text-stone-600 leading-relaxed">
+                    Fichas técnicas detalladas con nombre científico, familia botánica,
+                    descripción morfológica y fotografías de referencia.
+                </p>
+            </div>
+            <!-- Card 2 -->
+            <div class="bg-white rounded-xl shadow-md p-8 hover:shadow-lg transition-shadow">
+                <div class="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center mb-4">
+                    <svg class="w-7 h-7 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064">
+                        </path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-emerald-800 mb-2 font-serif-science">Geolocalización</h3>
+                <p class="text-stone-600 leading-relaxed">
+                    Clasificación por zonas macro (Norte, Centro, Sur, Patagonia) y regiones
+                    político-administrativas con descripción de hábitat.
+                </p>
+            </div>
+            <!-- Card 3 -->
+            <div class="bg-white rounded-xl shadow-md p-8 hover:shadow-lg transition-shadow">
+                <div class="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mb-4">
+                    <svg class="w-7 h-7 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
+                        </path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-emerald-800 mb-2 font-serif-science">Usos Terapéuticos</h3>
+                <p class="text-stone-600 leading-relaxed">
+                    Información detallada sobre propiedades medicinales, efectos terapéuticos,
+                    recetas de preparación tradicional y advertencias.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="bg-emerald-800 py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 font-serif-science">
+            Sabiduría Ancestral, Ciencia Moderna
+        </h2>
+        <p class="text-emerald-100 text-lg mb-8 max-w-2xl mx-auto">
+            Recuperamos y difundimos el conocimiento tradicional de la herbolaria chilena
+            con rigor científico y herramientas digitales.
+        </p>
+        <a href="{% url 'catalogo' %}"
+            class="inline-block bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all shadow-lg">
+            Comenzar exploración
+        </a>
+    </div>
+</section>
+{% endblock content %}

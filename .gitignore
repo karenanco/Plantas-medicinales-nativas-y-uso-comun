@@ -1,0 +1,40 @@
+# Database
+db.sqlite3
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.pyc
+
+# Environment
+.env
+.venv
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Django
+media/uploads/
+
+# Virtual environment
+*.egg-info/
+dist/
+build/
+
+# Coverage
+.coverage
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/

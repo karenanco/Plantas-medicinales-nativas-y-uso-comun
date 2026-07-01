@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ planta.nombre_comun }} — Ficha Técnica — FloraMed Chile{% endblock title %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- Back Button -->
+    <a href="#"
+       class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-medium transition-colors mb-6 group">
+        <svg class="w-5 h-5 mr-1 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        Volver al Catálogo
+    </a>
+
+    <!-- Header Image -->
+    {% if planta.foto_real %}
+    <div class="mb-8 rounded-xl overflow-hidden shadow-lg">
+        <img src="{{ planta.foto_real }}"
+             alt="{{ planta.nombre_comun }}"
+             class="w-full max-h-96 object-cover">
+    </div>
+    {% endif %}
+
+    <!-- Plant Header -->
+    <header class="mb-10 border-b border-stone-200 pb-6">
+        <h1 class="text-4xl md:text-5xl font-bold text-emerald-900 font-serif-science mb-2">
+            {{ planta.nombre_comun }}
+        </h1>
+        <p class="text-2xl md:text-3xl italic font-serif-science text-emerald-700">
+            {{ planta.nombre_cientifico }}
+        </p>
+    </header>
+
+    <!-- Info Cards Grid: 1 col mobile, 2 cols desktop -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        {# ===== Clasificación ===== #}
+        <div class="bg-white rounded-xl shadow-md p-6 border border-stone-200">
+            <h2 class="text-xl font-bold text-emerald-800 font-serif-science mb-4 flex items-center">
+                <svg class="w-6 h-6 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+                </svg>
+                Clasificación
+            </h2>
+            <dl class="space-y-3">
+                <div>
+                    <dt class="text-sm font-semibold text-stone-500 uppercase tracking-wide">Familia Botánica</dt>
+                    <dd class="text-stone-800 font-medium">{{ planta.familia_botanica }}</dd>
+                </div>
+                <div>
+                    <dt class="text-sm font-semibold text-stone-500 uppercase tracking-wide">Origen</dt>
+                    <dd>
+                        {% if planta.origen == "NATIVA" %}
+                        <span class="inline-block bg-emerald-100 text-emerald-800 text-sm font-semibold px-3 py-1 rounded-full">
+                            {{ planta.get_origen_display }}
+                        </span>
+                        {% else %}
+                        <span class="inline-block bg-amber-100 text-amber-800 text-sm font-semibold px-3 py-1 rounded-full">
+                            {{ planta.get_origen_display }}
+                        </span>
+                        {% endif %}
+                    </dd>
+                </div>
+                <div>
+                    <dt class="text-sm font-semibold text-stone-500 uppercase tracking-wide">Uso Principal</dt>
+                    <dd class="text-stone-800 font-medium">{{ planta.uso_principal }}</dd>
+                </div>
+            </dl>
+        </div>
+
+        {# ===== Geolocalización ===== #}
+        <div class="bg-white rounded-xl shadow-md p-6 border border-stone-200">
+            <h2 class="text-xl font-bold text-emerald-800 font-serif-science mb-4 flex items-center">
+                <svg class="w-6 h-6 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                Geolocalización
+            </h2>
+            <dl class="space-y-3">
+                <div>
+                    <dt class="text-sm font-semibold text-stone-500 uppercase tracking-wide">Zona Macro</dt>
+                    <dd>
+                        <span class="inline-block bg-emerald-100 text-emerald-800 text-sm font-semibold px-3 py-1 rounded-full">
+                            {{ planta.get_zona_macro_display }}
+                        </span>
+                    </dd>
+                </div>
+                <div>
+                    <dt class="text-sm font-semibold text-stone-500 uppercase tracking-wide">Regiones</dt>
+                    <dd class="font-mono-tech text-stone-800 text-sm">{{ planta.regiones }}</dd>
+                </div>
+                <div>
+                    <dt class="text-sm font-semibold text-stone-500 uppercase tracking-wide">Hábitat</dt>
+                    <dd class="text-stone-700 leading-relaxed">{{ planta.habitat }}</dd>
+                </div>
+            </dl>
+        </div>
+
+        {# ===== Identificación Morfológica ===== #}
+        <div class="lg:col-span-2">
+            <h2 class="text-xl font-bold text-emerald-800 font-serif-science mb-4 flex items-center">
+                <svg class="w-6 h-6 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                </svg>
+                Identificación Morfológica
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Hoja -->
+                <div class="bg-white rounded-xl shadow-md p-5 border border-stone-200">
+                    <h3 class="text-lg font-bold text-emerald-700 font-serif-science mb-2 flex items-center">
+                        <svg class="w-5 h-5 mr-1.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                        </svg>
+                        Hoja
+                    </h3>
+                    <p class="text-stone-700 leading-relaxed text-sm">{{ planta.descripcion_hoja }}</p>
+                </div>
+                <!-- Tallo -->
+                <div class="bg-white rounded-xl shadow-md p-5 border border-stone-200">
+                    <h3 class="text-lg font-bold text-emerald-700 font-serif-science mb-2 flex items-center">
+                        <svg class="w-5 h-5 mr-1.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        Tallo
+                    </h3>
+                    <p class="text-stone-700 leading-relaxed text-sm">{{ planta.descripcion_tallo }}</p>
+                </div>
+                <!-- Flor -->
+                <div class="bg-white rounded-xl shadow-md p-5 border border-stone-200">
+                    <h3 class="text-lg font-bold text-emerald-700 font-serif-science mb-2 flex items-center">
+                        <svg class="w-5 h-5 mr-1.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                        </svg>
+                        Flor
+                    </h3>
+                    <p class="text-stone-700 leading-relaxed text-sm">{{ planta.descripcion_flor }}</p>
+                </div>
+            </div>
+        </div>
+
+        {# ===== Usos Terapéuticos ===== #}
+        <div class="bg-white rounded-xl shadow-md p-6 border border-stone-200">
+            <h2 class="text-xl font-bold text-emerald-800 font-serif-science mb-4 flex items-center">
+                <svg class="w-6 h-6 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                </svg>
+                Usos Terapéuticos
+            </h2>
+            <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-4 mb-3">
+                <span class="text-sm font-semibold text-emerald-800 uppercase tracking-wide">Efecto Terapéutico</span>
+                <p class="text-lg font-bold text-emerald-900 mt-1">{{ planta.efecto_terapeutico }}</p>
+            </div>
+            <p class="text-sm text-stone-500">
+                <span class="font-semibold">Uso principal:</span> {{ planta.uso_principal }}
+            </p>
+        </div>
+
+        {# ===== Receta / Preparación ===== #}
+        <div class="lg:col-span-2 bg-white rounded-xl shadow-md p-6 border border-stone-200">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xl font-bold text-emerald-800 font-serif-science flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                    </svg>
+                    Receta / Preparación
+                </h2>
+                <button onclick="copiarReceta()"
+                        class="inline-flex items-center bg-amber-600 hover:bg-amber-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors shadow-sm text-sm">
+                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                    </svg>
+                    Copiar Receta
+                </button>
+            </div>
+            <div id="receta-texto" class="prose prose-stone max-w-none text-stone-700 leading-relaxed whitespace-pre-wrap">
+                {{ planta.receta_preparacion }}
+            </div>
+        </div>
+
+        {# ===== Advertencias ===== #}
+        <div class="lg:col-span-2">
+            <div class="bg-amber-50 border-2 border-amber-300 rounded-xl shadow-md p-6">
+                <h2 class="text-xl font-bold text-amber-800 font-serif-science mb-3 flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                    </svg>
+                    Advertencias y Precauciones
+                </h2>
+                <div class="text-amber-900 leading-relaxed whitespace-pre-wrap">
+                    {{ planta.advertencias }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {# ===== Favoritos Button (authenticated only) ===== #}
+    {% if user.is_authenticated %}
+    <div class="mt-10 text-center">
+        <form action="{% url 'toggle_favorito' planta.id %}" method="POST" class="inline">
+            {% csrf_token %}
+            <button type="submit"
+                    class="inline-flex items-center bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-8 py-3 rounded-lg transition-colors shadow-md text-lg">
+                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                </svg>
+                Agregar a Favoritos
+            </button>
+        </form>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock content %}
+
+{% block extra_scripts %}
+<script>
+function copiarReceta() {
+    const receta = document.getElementById('receta-texto').innerText;
+    navigator.clipboard.writeText(receta).then(() => {
+        alert('¡Receta copiada al portapapeles!');
+    });
+}
+</script>
+{% endblock extra_scripts %}

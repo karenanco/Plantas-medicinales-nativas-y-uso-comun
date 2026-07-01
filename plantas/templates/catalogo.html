@@ -1,0 +1,273 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Catálogo — FloraMed Chile{% endblock title %}
+
+{% block content %}
+<!-- Catalog Header -->
+<section class="bg-gradient-to-br from-emerald-800 via-emerald-700 to-emerald-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold font-serif-science mb-4 leading-tight">
+            Catálogo de Plantas
+        </h1>
+        <p class="text-lg md:text-xl text-emerald-100 max-w-2xl mx-auto leading-relaxed">
+            Explora nuestra colección de plantas medicinales nativas y de uso tradicional en Chile.
+            Cada ficha incluye identificación científica, geolocalización y usos terapéuticos.
+        </p>
+        <div class="w-24 h-1 bg-amber-500 mx-auto mt-6"></div>
+    </div>
+</section>
+
+<!-- Gallery Grid -->
+<section class="bg-stone-50 py-12 md:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Filter / Search Panel -->
+        <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-4 sm:p-6 mb-8">
+            <form method="GET" action="{% url 'catalogo' %}">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Search input -->
+                    <div>
+                        <label for="q" class="block text-sm font-medium text-stone-700 mb-1">
+                            Buscar
+                        </label>
+                        <div class="relative">
+                            <input type="text" name="q" id="q" value="{{ filter_q }}"
+                                   placeholder="Nombre, científico, familia..."
+                                   class="w-full pl-10 pr-3 py-2 border border-stone-300 rounded-lg
+                                          focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500
+                                          text-sm bg-white placeholder-stone-400">
+                            <svg class="absolute left-3 top-2.5 w-4 h-4 text-stone-400"
+                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Origen filter -->
+                    <div>
+                        <label for="origen" class="block text-sm font-medium text-stone-700 mb-1">
+                            Origen
+                        </label>
+                        <select name="origen" id="origen"
+                                class="w-full px-3 py-2 border border-stone-300 rounded-lg
+                                       focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500
+                                       text-sm bg-white">
+                            <option value="">Todos</option>
+                            <option value="NATIVA" {% if filter_origen == "NATIVA" %}selected{% endif %}>
+                                Nativa de Chile
+                            </option>
+                            <option value="ASILVESTRADA" {% if filter_origen == "ASILVESTRADA" %}selected{% endif %}>
+                                Asilvestrada de Uso Tradicional
+                            </option>
+                        </select>
+                    </div>
+
+                    <!-- Zona Macro filter -->
+                    <div>
+                        <label for="zona" class="block text-sm font-medium text-stone-700 mb-1">
+                            Zona Macro
+                        </label>
+                        <select name="zona" id="zona"
+                                class="w-full px-3 py-2 border border-stone-300 rounded-lg
+                                       focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500
+                                       text-sm bg-white">
+                            <option value="">Todas</option>
+                            <option value="NORTE" {% if filter_zona == "NORTE" %}selected{% endif %}>Norte</option>
+                            <option value="CENTRO" {% if filter_zona == "CENTRO" %}selected{% endif %}>Centro</option>
+                            <option value="SUR" {% if filter_zona == "SUR" %}selected{% endif %}>Sur</option>
+                            <option value="PATAGONIA" {% if filter_zona == "PATAGONIA" %}selected{% endif %}>Patagonia</option>
+                        </select>
+                    </div>
+
+                    <!-- Efecto Terapéutico filter -->
+                    <div>
+                        <label for="efecto" class="block text-sm font-medium text-stone-700 mb-1">
+                            Efecto Terapéutico
+                        </label>
+                        <select name="efecto" id="efecto"
+                                class="w-full px-3 py-2 border border-stone-300 rounded-lg
+                                       focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500
+                                       text-sm bg-white">
+                            <option value="">Todos</option>
+                            <option value="Digestivo" {% if filter_efecto == "Digestivo" %}selected{% endif %}>Digestivo</option>
+                            <option value="Hepático" {% if filter_efecto == "Hepático" %}selected{% endif %}>Hepático</option>
+                            <option value="Cicatrizante" {% if filter_efecto == "Cicatrizante" %}selected{% endif %}>Cicatrizante</option>
+                            <option value="Antiinflamatorio" {% if filter_efecto == "Antiinflamatorio" %}selected{% endif %}>Antiinflamatorio</option>
+                            <option value="Ansiolítico" {% if filter_efecto == "Ansiolítico" %}selected{% endif %}>Ansiolítico</option>
+                            <option value="Diurético" {% if filter_efecto == "Diurético" %}selected{% endif %}>Diurético</option>
+                            <option value="Expectorante" {% if filter_efecto == "Expectorante" %}selected{% endif %}>Expectorante</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Buttons row -->
+                <div class="flex flex-wrap items-center justify-between mt-4 gap-2">
+                    <button type="submit"
+                            class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium
+                                   rounded-lg transition-colors focus:outline-none focus:ring-2
+                                   focus:ring-emerald-500 focus:ring-offset-2">
+                        Filtrar
+                    </button>
+                    <a href="{% url 'catalogo' %}"
+                       class="px-4 py-2 text-sm font-medium text-stone-500 hover:text-stone-800
+                              transition-colors rounded-lg hover:bg-stone-100">
+                        Limpiar filtros
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        {% if plantas %}
+            {% for planta in plantas %}
+            <a href="{% url 'detalle_planta' planta.id %}" class="group block focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-xl">
+                <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 h-full flex flex-col">
+                    <!-- Image -->
+                    <div class="h-48 bg-stone-200 overflow-hidden relative">
+                        {% if planta.foto_real %}
+                        <img src="{{ planta.foto_real }}"
+                             alt="{{ planta.nombre_comun }}"
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                             loading="lazy"
+                             onerror="this.parentElement.innerHTML = fallbackSvg()">
+                        {% else %}
+                        <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-100 to-emerald-200">
+                            <!-- Leaf placeholder SVG -->
+                            <svg class="w-20 h-20 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                                </path>
+                            </svg>
+                        </div>
+                        {% endif %}
+                        <!-- Top-right badge: uso_principal -->
+                        <span class="absolute top-3 right-3 text-xs font-semibold px-2.5 py-1 rounded-full bg-white/90 text-emerald-800 shadow-sm backdrop-blur-sm font-mono-tech">
+                            {{ planta.uso_principal }}
+                        </span>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="p-5 flex flex-col flex-1">
+                        <!-- Common name -->
+                        <h2 class="text-xl font-bold text-emerald-800 mb-1 group-hover:text-emerald-600 transition-colors leading-tight">
+                            {{ planta.nombre_comun }}
+                        </h2>
+
+                        <!-- Scientific name -->
+                        <p class="font-serif-science italic text-stone-500 text-sm mb-3 border-l-2 border-amber-500/50 pl-3">
+                            {{ planta.nombre_cientifico }}
+                        </p>
+
+                        <!-- Family -->
+                        <p class="text-xs text-stone-400 font-mono-tech mb-3">
+                            {{ planta.familia_botanica }}
+                        </p>
+
+                        <!-- Spacer -->
+                        <div class="flex-1"></div>
+
+                        <!-- Badges -->
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                            {% if planta.origen == "NATIVA" %}
+                            <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200">
+                                Nativa
+                            </span>
+                            {% else %}
+                            <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-amber-100 text-amber-700 border border-amber-200">
+                                Asilvestrada
+                            </span>
+                            {% endif %}
+
+                            {% with zona=planta.zona_macro %}
+                            {% if zona == "NORTE" %}
+                            <span class="text-xs font-mono-tech font-medium px-2.5 py-1 rounded-full bg-orange-100 text-orange-700 border border-orange-200">
+                                {{ planta.get_zona_macro_display }}
+                            </span>
+                            {% elif zona == "CENTRO" %}
+                            <span class="text-xs font-mono-tech font-medium px-2.5 py-1 rounded-full bg-sky-100 text-sky-700 border border-sky-200">
+                                {{ planta.get_zona_macro_display }}
+                            </span>
+                            {% elif zona == "SUR" %}
+                            <span class="text-xs font-mono-tech font-medium px-2.5 py-1 rounded-full bg-teal-100 text-teal-700 border border-teal-200">
+                                {{ planta.get_zona_macro_display }}
+                            </span>
+                            {% elif zona == "PATAGONIA" %}
+                            <span class="text-xs font-mono-tech font-medium px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-700 border border-indigo-200">
+                                {{ planta.get_zona_macro_display }}
+                            </span>
+                            {% endif %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
+        <!-- Results count -->
+        <div class="flex flex-wrap items-center justify-center gap-3 mt-10">
+            <p class="text-stone-500 text-sm font-mono-tech">
+                {{ plantas|length }} resultado{{ plantas|length|pluralize:"" }} encontrado{{ plantas|length|pluralize:"" }}
+            </p>
+            {% if active_filters %}
+            <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-700 border border-amber-200">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+                </svg>
+                {{ active_filters }} filtro{{ active_filters|pluralize:"s" }} activo{{ active_filters|pluralize:"s" }}
+            </span>
+            {% endif %}
+        </div>
+
+        {% else %}
+        <!-- Empty state -->
+        <div class="text-center py-20 md:py-28">
+            <svg class="w-24 h-24 mx-auto text-stone-300 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                </path>
+            </svg>
+            {% if active_filters %}
+            <h2 class="text-2xl font-bold text-stone-500 mb-3 font-serif-science">
+                Sin resultados
+            </h2>
+            <p class="text-stone-400 text-lg max-w-md mx-auto leading-relaxed mb-6">
+                No encontramos plantas que coincidan con los filtros seleccionados.
+                Intenta modificar tu búsqueda o
+                <a href="{% url 'catalogo' %}"
+                   class="text-emerald-600 hover:text-emerald-700 underline font-medium">
+                    limpia los filtros
+                </a>
+                para ver todas las plantas.
+            </p>
+            {% else %}
+            <h2 class="text-2xl font-bold text-stone-500 mb-3 font-serif-science">
+                Catálogo en construcción
+            </h2>
+            <p class="text-stone-400 text-lg max-w-md mx-auto leading-relaxed">
+                Aún no hay plantas registradas en el catálogo. ¡Vuelve pronto!
+            </p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock content %}
+
+{% block extra_scripts %}
+<script>
+    /**
+     * Returns an inline SVG placeholder when a plant image fails to load.
+     * Called from the onerror handler of catalog card images.
+     */
+    function fallbackSvg() {
+        return '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-100 to-emerald-200">'
+            + '<svg class="w-20 h-20 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">'
+            + '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" '
+            + 'd="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">'
+            + '</path></svg></div>';
+    }
+</script>
+{% endblock extra_scripts %}
